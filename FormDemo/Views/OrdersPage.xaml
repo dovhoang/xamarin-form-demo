@@ -10,10 +10,11 @@
              Visual="Material">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="New" Clicked="MenuItem_OnClicked" />
-        <ToolbarItem Text="Open" Clicked="MenuItem_OnClicked" />
-        <ToolbarItem Text="Ready" Clicked="MenuItem_OnClicked" />
-        <ToolbarItem Text="Cancelled" Clicked="MenuItem_OnClicked" />
+        
+        <ToolbarItem Text="Device Code" Clicked="DeviceInfo_OnClicked" />
+        <ToolbarItem Text="Internet" Clicked="CheckInternet_OnClicked" />
+        <ToolbarItem Text="Request permission" Clicked="RequestPermission_OnClicked" />
+        <ToolbarItem IconImageSource="icon_about.png" Clicked="MenuItem_OnClicked" />
     </ContentPage.ToolbarItems>
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.

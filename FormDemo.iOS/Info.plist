@@ -32,6 +32,8 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>FormDemo</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>My description about why I need this capability</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 </dict>

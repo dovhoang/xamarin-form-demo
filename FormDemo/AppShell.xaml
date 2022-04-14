@@ -79,10 +79,10 @@
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
     <FlyoutItem Title="Order" Icon="icon_feed.png" FlyoutDisplayOptions="AsSingleItem">
-        <ShellContent Route="page1" Title="New" ContentTemplate="{DataTemplate local:OrdersPage}" />
-        <ShellContent Route="page2" Title="Open" ContentTemplate="{DataTemplate local:OrdersPage}" />
-        <ShellContent Route="page3" Title="Ready" ContentTemplate="{DataTemplate local:OrdersPage}" />
-        <ShellContent Route="page4" Title="Cancelled" ContentTemplate="{DataTemplate local:OrdersPage}" />
+        <ShellContent  Route="page1" Title="New" ContentTemplate="{DataTemplate local:OrdersPage}" />
+        <ShellContent  Route="page2" Title="Open" ContentTemplate="{DataTemplate local:OrdersPage}" />
+        <ShellContent  Route="page3" Title="Ready" ContentTemplate="{DataTemplate local:OrdersPage}" />
+        <ShellContent  Route="page4" Title="Cancelled" ContentTemplate="{DataTemplate local:OrdersPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Setting" Icon="icon_about.png">
         <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:SettingPage}" />

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Runtime.InteropServices;
+using FormDemo.iOS;
+using FormDemo.Services;
 using Foundation;
 using UIKit;
+
+[assembly: Xamarin.Forms.Dependency(typeof(IOSDevice))]
 
 namespace FormDemo.iOS
 {
@@ -20,7 +24,7 @@ namespace FormDemo.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
-        
+
         // Ref https://stackoverflow.com/questions/69630728/xamarin-forms-ios-navigation-bar/69639947#69639947
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
@@ -33,17 +37,52 @@ namespace FormDemo.iOS
             {
                 var appearance = new UINavigationBarAppearance();
                 appearance.ConfigureWithOpaqueBackground();
-                
+
                 appearance.BackgroundColor = UIColor.SystemBlueColor;
-                appearance.TitleTextAttributes = new UIStringAttributes() { ForegroundColor = UIColor.White};
-                
-                
+                appearance.TitleTextAttributes = new UIStringAttributes() {ForegroundColor = UIColor.White};
+
+
                 UINavigationBar.Appearance.StandardAppearance = appearance;
                 UINavigationBar.Appearance.CompactAppearance = appearance;
                 UINavigationBar.Appearance.ScrollEdgeAppearance = appearance;
             }
 
             return base.FinishedLaunching(app, options);
+        }
+    }
+
+    public class IOSDevice : IDevice
+    {
+        [DllImport("/System/Library/Frameworks/IOKit.framework/IOKit")]
+        private static extern uint IOServiceGetMatchingService(uint masterPort, IntPtr matching);
+
+        [DllImport("/System/Library/Frameworks/IOKit.framework/IOKit")]
+        private static extern IntPtr IOServiceMatching(string s);
+
+        [DllImport("/System/Library/Frameworks/IOKit.framework/IOKit")]
+        private static extern IntPtr IORegistryEntryCreateCFProperty(uint entry, IntPtr key, IntPtr allocator,
+            uint options);
+
+        [DllImport("/System/Library/Frameworks/IOKit.framework/IOKit")]
+        private static extern int IOObjectRelease(uint o);
+
+        public string GetDeviceCode()
+        {
+            string serial = string.Empty;
+            uint platformExpert = IOServiceGetMatchingService(0, IOServiceMatching("IOPlatformExpertDevice"));
+            if (platformExpert != 0)
+            {
+                NSString key = (NSString) "IOPlatformSerialNumber";
+                IntPtr serialNumber = IORegistryEntryCreateCFProperty(platformExpert, key.Handle, IntPtr.Zero, 0);
+                if (serialNumber != IntPtr.Zero)
+                {
+                    serial = NSString.FromHandle(serialNumber);
+                }
+
+                IOObjectRelease(platformExpert);
+            }
+
+            return serial;
         }
     }
 }

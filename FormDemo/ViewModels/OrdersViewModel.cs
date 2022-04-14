@@ -12,22 +12,26 @@ namespace FormDemo.ViewModels
 {
     public class OrdersViewModel : BaseViewModel
     {
-        private Item _selectedItem;
+        private Order _selectedOrder;
 
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<Order> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
+        public Command<Order> ItemTapped { get; }
+        
+        public double ItemWidth { get; set; }
 
         public OrdersViewModel()
         {
             Title = "Order";
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<Order>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            ItemTapped = new Command<Item>(OnItemSelected);
+            ItemTapped = new Command<Order>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
+            
+            LoadItemsCommand.Execute(this);
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -56,15 +60,15 @@ namespace FormDemo.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-            SelectedItem = null;
+            SelectedOrder = null;
         }
 
-        public Item SelectedItem
+        public Order SelectedOrder
         {
-            get => _selectedItem;
+            get => _selectedOrder;
             set
             {
-                SetProperty(ref _selectedItem, value);
+                SetProperty(ref _selectedOrder, value);
                 OnItemSelected(value);
             }
         }
@@ -74,13 +78,13 @@ namespace FormDemo.ViewModels
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
-        async void OnItemSelected(Item item)
+        async void OnItemSelected(Order order)
         {
-            if (item == null)
+            if (order == null)
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(OrderDetailViewModel.ItemId)}={item.Id}");
+            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(OrderDetailViewModel.ItemId)}={order.Id}");
         }
     }
 }

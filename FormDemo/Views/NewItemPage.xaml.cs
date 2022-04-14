@@ -11,7 +11,7 @@ namespace FormDemo.Views
 {
     public partial class NewItemPage : ContentPage
     {
-        public Item Item { get; set; }
+        public Order Order { get; set; }
 
         public NewItemPage()
         {

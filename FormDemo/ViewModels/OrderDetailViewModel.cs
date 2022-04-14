@@ -45,7 +45,7 @@ namespace FormDemo.ViewModels
             {
                 var item = await DataStore.GetItemAsync(itemId);
                 Id = item.Id;
-                Text = item.Text;
+                Text = item.CashierName;
                 Description = item.Description;
             }
             catch (Exception)

@@ -4,6 +4,7 @@ using Xamarin.Forms.Xaml;
 using FormDemo.Services;
 using FormDemo.Views;
 
+[assembly: ExportFont("MaterialIconsRegular.ttf", Alias = "Material")]
 namespace FormDemo
 {
     public partial class App : Application

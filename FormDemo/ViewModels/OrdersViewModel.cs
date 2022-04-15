@@ -14,7 +14,7 @@ namespace FormDemo.ViewModels
     {
         private Order _selectedOrder;
 
-        public ObservableCollection<Order> Items { get; }
+        public ObservableCollection<OrderItemViewModel> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public Command<Order> ItemTapped { get; }
@@ -24,12 +24,12 @@ namespace FormDemo.ViewModels
         public OrdersViewModel()
         {
             Title = "Order";
-            Items = new ObservableCollection<Order>();
+            Items = new ObservableCollection<OrderItemViewModel>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            ItemTapped = new Command<Order>(OnItemSelected);
+            //ItemTapped = new Command<Order>(OnItemSelected);
 
-            AddItemCommand = new Command(OnAddItem);
+            //AddItemCommand = new Command(OnAddItem);
             
             LoadItemsCommand.Execute(this);
         }
@@ -44,7 +44,14 @@ namespace FormDemo.ViewModels
                 var items = await DataStore.GetItemsAsync(true);
                 foreach (var item in items)
                 {
-                    Items.Add(item);
+                    var totalPage = item.TotalItems / AppConstants.MaxLineItemInOrder + 
+                                    (item.TotalItems % AppConstants.MaxLineItemInOrder == 0 ? 0 : 1);
+                    for (var i = 0; i < totalPage; i++)
+                    {
+
+                        Items.Add(new OrderItemViewModel(item, totalPage, i));
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -61,6 +68,13 @@ namespace FormDemo.ViewModels
         {
             IsBusy = true;
             SelectedOrder = null;
+        }
+        
+        string title = string.Empty;
+        public string Title
+        {
+            get { return title; }
+            set { SetProperty(ref title, value); }
         }
 
         public Order SelectedOrder
@@ -84,7 +98,7 @@ namespace FormDemo.ViewModels
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(OrderDetailViewModel.ItemId)}={order.Id}");
+            // await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(OrderItemViewModel.ItemId)}={order.Id}");
         }
     }
 }

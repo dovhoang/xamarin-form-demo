@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<StackLayout BackgroundColor="LightGray" Spacing="0" Orientation="Horizontal"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FormDemo.Views.ContinuedView"
+             xmlns:fontIcon="clr-namespace:FormDemo.Helper;assembly=FormDemo"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    
+    <Label
+        Text="Continued"
+        LineBreakMode="NoWrap"
+        Style="{DynamicResource ListItemDetailTextStyle}"
+        FontSize="12"
+        TextColor="DimGray"
+        Padding="10"
+        Margin="0">
+    </Label>
+    <Label Style="{StaticResource MaterialIcons}"
+           Text="{x:Static fontIcon:IconFont.ChevronDoubleRight}" TextColor="DimGray" FontSize="20"/>
+    
+</StackLayout>

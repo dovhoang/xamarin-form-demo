@@ -27,13 +27,14 @@ namespace FormDemo.Services
             for (var i = 0; i < items.Count; i ++)
             {
                 items[i].LineItems = new List<LineItem>();
-                for (int j = 0; j < i + 1; j++)
+                for (int j = 0; j < (i + 1)*2; j++)
                 {
                     items[i].LineItems.Add(new LineItem() {Id = Guid.NewGuid().ToString(), Name = "Chicken Nugget", Description = "Accepted"});
                 }
+                
+                items[i].CreatedAt = DateTime.Now.AddSeconds(-i * 10);
                
-                items[i].TotalItems = items[i].LineItems.Count.ToString();
-                items[i].HeightRequest = items[i].LineItems.Count * 80; 
+                items[i].TotalItems = items[i].LineItems.Count;
             }
             
         }

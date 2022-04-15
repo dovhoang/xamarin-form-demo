@@ -9,7 +9,7 @@ namespace FormDemo.Views
         public ItemDetailPage()
         {
             InitializeComponent();
-            BindingContext = new OrderDetailViewModel();
+            //BindingContext = new OrderItemViewModel();
         }
     }
 }

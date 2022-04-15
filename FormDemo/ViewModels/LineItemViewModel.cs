@@ -7,17 +7,27 @@ using Xamarin.Forms;
 namespace FormDemo.ViewModels
 {
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
-    public class OrderDetailViewModel : BaseViewModel
+    public class LineItemViewModel : BaseViewModel
     {
         private string itemId;
-        private string text;
+        private string _name;
         private string description;
+        private int heightRequest;
+
+        public LineItemViewModel(LineItem lineItem)
+        {
+           
+            Id = lineItem.Id;
+            Name = lineItem.Name;
+            Description = lineItem.Description;
+        }
+        
         public string Id { get; set; }
 
-        public string Text
+        public string Name
         {
-            get => text;
-            set => SetProperty(ref text, value);
+            get => _name;
+            set => SetProperty(ref _name, value);
         }
 
         public string Description
@@ -45,7 +55,7 @@ namespace FormDemo.ViewModels
             {
                 var item = await DataStore.GetItemAsync(itemId);
                 Id = item.Id;
-                Text = item.CashierName;
+                Name = item.CashierName;
                 Description = item.Description;
             }
             catch (Exception)
